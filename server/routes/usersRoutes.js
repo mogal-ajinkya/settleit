@@ -41,9 +41,9 @@ router.post("/login",async (req,res)=> {
     if(!user){
       throw new Error("user not found");
     } 
-     // if user is active
-     if (user.status !== "active") {
-      throw new Error("The user account is blocked , please contact admin");
+    //  // if user is active
+    //  if (user.status !== "active") {
+    //   throw new Error("The user account is blocked , please contact admin");
     }
     // compare pass 
     const validPassword = await bcrypt.compare(

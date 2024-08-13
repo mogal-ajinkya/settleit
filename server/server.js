@@ -5,11 +5,11 @@ const cors = require('cors');
 app.use(express.json());
 
 // Allow all origins
-// app.use(cors());
+app.use(cors());
 // Allow specific origin(s)
-app.use(cors({
-  origin: 'https://splititapp-pi.vercel.app/'
-}));
+// app.use(cors({
+//   origin: 'https://splititapp-pi.vercel.app/'
+// }));
 
 require('dotenv').config();
 const dbconfig = require('./config/dbConfig');

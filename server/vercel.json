@@ -2,27 +2,11 @@
     "version": 2,
     "builds": [
         {
-            "src": "server.js",
+            "src": "*.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
-        {
-            "src": "/api/users",
-            "dest": "/api/users"
-        },
-        {
-            "src": "/api/groups",
-            "dest": "/api/groups"
-        },
-        {
-            "src": "/api/expense",
-            "dest": "/api/expense"
-        },
-        {
-            "src": "/api/settlement",
-            "dest": "/api/settlement"
-        },
         {
             "src": "/(.*)",
             "dest": "/"

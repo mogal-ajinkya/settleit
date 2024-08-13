@@ -35,7 +35,23 @@ router.get("/get-expense-by-grpid/:id", async (req, res) => {
     });
   }
 });
-
+router.post("/get-expenses",  authMiddleware, async (req, res) => {
+  try {
+    const products = await Expense.find({
+      groupId:req.body.groupId,
+      type:req.body.type
+    }).sort({ createdAt: -1 });
+    res.send({
+      success: true,
+      data: products,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
 // edit a Expense
 router.put("/edit-expense/:id", authMiddleware, async (req, res) => {

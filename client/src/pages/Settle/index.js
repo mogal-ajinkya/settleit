@@ -65,17 +65,17 @@ const Settle = () => {
     {
       title: "From ",
       dataIndex: "from",
-      className: "max-sm:hidden",
+      className:"text-lg font-medium text-gray-800 mr-2 max-sm:hidden"
     },
     {
       title: "to",
       dataIndex: "to",
-      className: "max-sm:hidden",
+      className:"text-lg font-medium text-gray-800 mr-2 max-sm:hidden"
     },
     {
       title: "Amount",
       dataIndex: "amount",
-      className: "max-sm:hidden",
+      className:"text-lg font-medium text-gray-800 mr-2 max-sm:hidden"
     },
     {
       title: "Action",
@@ -85,9 +85,9 @@ const Settle = () => {
           <div className="flex gap-5 items-center">
             <Button
               onClick={() => {
-                // AddSettlementExpense(record._id);
                 Settle(record);
               }}
+              className="text-lg font-medium text-gray-800 mr-2 max-sm:hidden"
             >
               Pay{" "}
             </Button>
@@ -104,29 +104,12 @@ const Settle = () => {
   return (
     <div className="w-full">
       <div className="flex justify-end mb-2">
-        {/* <Button
-          type="default"
-          onClick={() => {
-            setshowExpenseForm(true);
-            setSelectedExpense(null);
-          }}
-        >
-          Add Expense
-        </Button> */}
       </div>
       <Table
         columns={columns}
         dataSource={settlement}
         scroll={{ x: "max-content" }}
       ></Table>
-      {/* {showExpenseForm && (
-        <ExpensesForm
-        showExpenseForm={showExpenseForm}
-          setshowExpenseForm={setshowExpenseForm}
-          selectedExpense={selectedExpense}
-          getData={getData}
-        />
-      )} */}
     </div>
   );
 };

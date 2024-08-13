@@ -1,17 +1,14 @@
-import React, { useState } from "react";
-import { Button, message, Table } from "antd";
+import React from "react";
+import { message, Table } from "antd";
 import { useDispatch } from "react-redux";
 import { SetLoader } from "../../redux/loadersSlice";
 import { useEffect } from "react";
-// import { DeleteGroup } from "../../../";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { GetExpense } from "../../apicalls/expense";
 
 const SettleHistory = () => {
   const {id} = useParams();
   const [settledExpenses, setSettledExpenses] = React.useState(null);
-  const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
 
   const getData = async () => {

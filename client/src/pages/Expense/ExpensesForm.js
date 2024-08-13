@@ -1,13 +1,11 @@
-import { Modal, Tabs, Form, Input, Row, Col, message } from "antd";
+import { Modal, Form, Input, Row, Col, message } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { SetLoader } from "../../redux/loadersSlice"
+import { SetLoader } from "../../redux/loadersSlice";
 import { useParams } from "react-router-dom";
 import { EditExpense } from "../../apicalls/expense";
 import { AddExpense } from "../../apicalls/expense";
-import { GetGroupById } from "../../apicalls/products";
-import { useState } from "react";
+import { GetGroupById } from "../../apicalls/groups";
 
 const rules = [
   {
@@ -24,9 +22,7 @@ function ExpensesForm({
 }) {
   const { id } = useParams();
   const [groups, setGroups] = React.useState([]);
-  const [SelectedTab, setSelectedTab] = React.useState("1");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.users);
 
   const onFinish = async (values) => {
     try {
@@ -34,25 +30,25 @@ function ExpensesForm({
 
       const totalAmount = values.amount;
       const selectedMembers = Object.keys(values)
-        .filter(key => key.startsWith('paidFor_') && values[key])
-        .map(key => key.replace('paidFor_', ''));
+        .filter((key) => key.startsWith("paidFor_") && values[key])
+        .map((key) => key.replace("paidFor_", ""));
 
       const amountPerPayee = totalAmount / selectedMembers.length;
 
       // Format payees array
-      const payeesData = selectedMembers.map(member => ({
+      const payeesData = selectedMembers.map((member) => ({
         identifier: member,
         amount: amountPerPayee,
       }));
 
       // Clean up values to remove any dynamic fields
       Object.keys(values)
-        .filter(key => key.startsWith('paidFor_'))
-        .forEach(key => delete values[key]);
-      
+        .filter((key) => key.startsWith("paidFor_"))
+        .forEach((key) => delete values[key]);
+
       values.payees = payeesData;
       values.groupId = id;
-      values.type = 'expense';
+      values.type = "expense";
 
       let response = null;
       if (selectedExpense) {
@@ -60,6 +56,7 @@ function ExpensesForm({
       } else {
         response = await AddExpense(values);
       }
+
       dispatch(SetLoader(false));
       if (response.success) {
         message.success(response.message);
@@ -78,9 +75,33 @@ function ExpensesForm({
 
   const formRef = React.useRef(null);
 
+  // useEffect(() => {
+  //   // console.log
+  //   if (selectedExpense) {
+  //     formRef.current.setFieldsValue(selectedExpense);
+  //   } else {
+  //     formRef.current.resetFields();
+  //   }
+  // }, [selectedExpense]);
+
   useEffect(() => {
-    if (selectedExpense) {
-      formRef.current.setFieldsValue(selectedExpense);
+    if (selectedExpense && formRef.current) {
+      const reconstructedValues = {
+        ...selectedExpense, // Preserve existing fields
+        payer: selectedExpense.payer || "",
+        date: selectedExpense.date ? selectedExpense.date.split("T")[0] : "",
+      };
+
+      if (selectedExpense.payees) {
+        selectedExpense.payees.forEach((payee) => {
+          const key = `paidFor_${payee.identifier}`;
+          reconstructedValues[key] = true;
+        });
+      }
+
+      formRef.current.setFieldsValue(reconstructedValues);
+    } else if (formRef.current) {
+      formRef.current.resetFields();
     }
   }, [selectedExpense]);
 
@@ -88,10 +109,8 @@ function ExpensesForm({
     try {
       dispatch(SetLoader(true));
       const response = await GetGroupById(id);
-      // console.log(response);
       dispatch(SetLoader(false));
       if (response.success) {
-        // console.log(response.data);
         setGroups(response.data);
       }
     } catch (error) {
@@ -101,7 +120,6 @@ function ExpensesForm({
   };
 
   useEffect(() => {
-    // console.log(filters)
     getGroupData();
   }, []);
   return (
@@ -114,71 +132,80 @@ function ExpensesForm({
       onOk={() => {
         formRef.current.submit();
       }}
-      {...(SelectedTab === "2" && { footer: false })}
     >
       <div>
         <div className="text-2xl text-primary text-center font-semibold uppercase">
-          {selectedExpense ? "Edit Product" : "Add Product"}
+          {selectedExpense ? "Edit Expense" : "Add Expense"}
         </div>
-        <Tabs
-          defaultActiveKey="1"
-          activeKey={SelectedTab}
-          onChange={(key) => setSelectedTab(key)}
-          // width="80vw"
-        >
-          <Tabs.TabPane tab="General" key="1">
-            <Form layout="vertical" ref={formRef} onFinish={onFinish}>
-              <Form.Item label="Date" name="date" rules={rules}>
-                <Input
-                  type="date"
-                  // defaultValue={new Date().toISOString().split("T")[0]}
-                />
+        <Form layout="vertical" ref={formRef} onFinish={onFinish}>
+          <Form.Item
+            label="Date"
+            name="date"
+            rules={rules}
+            className="text-lg font-semibold mb-2"
+          >
+            <Input type="date" />
+          </Form.Item>
+
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={rules}
+            className="text-lg font-semibold mb-2"
+          >
+            <Input Type="text" />
+          </Form.Item>
+
+          <Row gutter={[16, 16]}>
+            <Col span={8}>
+              <Form.Item
+                label="Amount"
+                name="amount"
+                rules={rules}
+                className="text-lg font-semibold mb-2"
+              >
+                <Input Type="number" />
               </Form.Item>
+            </Col>
 
-              <Form.Item label="Description" name="description" rules={rules}>
-                <Input Type="text" />
+            <Col span={8}>
+              <Form.Item
+                label="Who Paid"
+                name="payer"
+                rules={rules}
+                className="text-lg font-semibold mb-2"
+              >
+                <select name="" id="">
+                  <option value="">Select</option>
+                  {console.log(groups)}
+                  {groups?.members?.map((member, index) => (
+                    <option key={index} value={member}>
+                      {member}
+                    </option>
+                  ))}
+                </select>
               </Form.Item>
+            </Col>
+          </Row>
 
-              <Row gutter={[16, 16]}>
-                <Col span={8}>
-                  <Form.Item label="Amount" name="amount" rules={rules}>
-                    <Input Type="number" />
-                  </Form.Item>
-                </Col>
-
-                <Col span={8}>
-                  <Form.Item label="Who Paid" name="payer" rules={rules}>
-                    <select name="" id="">
-                      <option value="">Select</option>
-                      {console.log(groups)}
-                      {groups?.members?.map((member, index) => (
-                        <option key={index} value={member}>
-                          {member}
-                        </option>
-                      ))}
-                    </select>
-                  </Form.Item>
-                </Col>
-              </Row>
-                
-              <div className="flex gap-10 flex-col">
-                <p>Paid for Whom : </p>
-                {groups?.members?.map((member, index) => (
+          <div className="flex flex-col">
+            <p className="text-lg font-semibold mb-2">Paid for Whom:</p>
+            <div className="space-y-4">
+              {groups?.members?.map((member, index) => (
+                <div key={index} className="flex items-center space-x-3">
                   <Form.Item
-                    key={index}
-                    label={member}
                     name={`paidFor_${member}`}
                     valuePropName="checked"
+                    className="mb-0"
                   >
-                    <Input
-                      type="checkbox"
-                    />
+                    <Input type="checkbox" className="h-5 w-5" />
                   </Form.Item>
-                ))}
-              </div>
-            </Form>
-          </Tabs.TabPane>
-        </Tabs>
+                  <span className="text-base">{member}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Form>
       </div>
     </Modal>
   );

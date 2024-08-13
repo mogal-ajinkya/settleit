@@ -41,10 +41,10 @@ function Login() {
       }
   },[]);
   return (
-    <div className="h-screen bg-primary flex justify-center items-center">
+    <div className="h-screen bg-[#c1f9a1] flex justify-center items-center">
       <div className="bg-white rounded p-5 w-[450px]">
-        <h1 className="text-primary tect-2xl">
-            PICT OLX <span className="text-grey-400"> LOGIN </span>
+        <h1 className="text-[#69cb2f] text-2xl">
+            SPLIT IT <span className="text-grey-400"> LOGIN </span>
         </h1>
         <Divider/>
         <Form layout="vertical"
@@ -65,7 +65,7 @@ function Login() {
           <div className="mt-5 text-center">
             <span className="text-gray-500">
               Don't have an account? {" "}
-              <Link className="text-primary" to="/register">
+              <Link className="text-[#69cb2f]" to="/register">
                 Register
               </Link>
             </span>

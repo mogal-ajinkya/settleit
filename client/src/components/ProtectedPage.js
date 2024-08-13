@@ -46,15 +46,16 @@ function ProtectedPage({ children }) {
   return (
     user && (
       <div>
+
         {/* header  */}
-        <div className="flex justify-between items-center bg-primary p-5 w-full ">
+        <div className="flex justify-between items-center bg-[#91d700] p-5 w-full ">
           <h1
-            className="text-2xl text-white cursor-pointer"
+            className="text-2xl text-[#f0f0f0] cursor-pointer"
             onClick={() => {
               navigate("/");
             }}
           >
-            SPLIT IT
+            SPLIT IT - Trip Expense Splitting App 
           </h1>
 
 
@@ -69,7 +70,7 @@ function ProtectedPage({ children }) {
                 }
               }}
             >
-              <div className="max-sm:hidden underline ">
+              <div className="max-sm:hidden">
               {user.name}
               </div>
               <div className="sm:hidden">

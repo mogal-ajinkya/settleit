@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SetLoader } from "../../redux/loadersSlice";
 import { message } from "antd";
 import { Button } from "antd/es/radio";
-import { GetGroups } from "../../apicalls/products";
+import { GetGroups } from "../../apicalls/groups";
 import Divider from "../../components/Divider";
 import GroupsForm from "./GroupsForm";
+import {DeleteGroup} from "../../apicalls/groups"
 
 function Home() {
   const [groups, setGroups] = React.useState([]);
@@ -31,15 +32,33 @@ function Home() {
     }
   };
 
+  const deleteExpense = async (id) => {
+    try {
+      dispatch(SetLoader(true));
+      const response = await DeleteGroup(id);
+      dispatch(SetLoader(false));
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        message.error(response.message);
+      }
+    } catch (error) {
+      dispatch(SetLoader(false));
+      message.error(error.message);
+    }
+  };
+
+
   useEffect(() => {
     getData();
   }, []);
 
   return (
-    <div className="flex gap-5 ">
+    <div className="flex gap-5">
       <div className="flex flex-col gap-5 w-full">
         {/*create group button  */}
-        <div className="flex justify-end mb-2">
+        <div className="flex justify-end mb-4">
           <Button
             type="default"
             onClick={() => {
@@ -47,9 +66,10 @@ function Home() {
               setSelectedGroup(null);
             }}
           >
-            Add Product
+            Create New Sheet
           </Button>
         </div>
+
         {showGroupForm && (
           <GroupsForm
             showGroupForm={showGroupForm}
@@ -58,33 +78,40 @@ function Home() {
             getData={getData}
           />
         )}
-        <div className="grid-cols-5 max-sm:grid-cols-3">
-          {groups?.map((group) => {
-            return (
-              <div className="flex flex-row border border-gray-300 rounded border-solid pb-2 ">
+
+        {groups?.map((group) => {
+          return (
+            <div className="flex flex-col gap-2 border border-gray-300 rounded border-solid p-2 ">
+              <div className="flex flex-row">
                 <div
-                  className="flex flex-col gap-2 cursor-pointer flex-wrap"
+                  className="flex flex-col cursor-pointer w-[98%]"
                   key={group._id}
                   onClick={() => navigate(`/product/${group._id}`)}
                 >
-                  <div className="px-2 flex flex-col">
-                    <h1 className="sm:text-lg sm:font-semibold max-sm:text-[10px]">
+                  <div className="flex flex-col">
+                    <h1 className="text-lg">
                       {group.name}
                     </h1>
-                    <Divider />
                   </div>
                 </div>
                 <i
-                  className="ri-pencil-line"
+                  className="ri-pencil-line cursor-pointer p-1"
                   onClick={() => {
                     setshowGroupForm(true);
                     setSelectedGroup(group);
                   }}
                 ></i>
+                <i
+              className="ri-delete-bin-line p-1"
+              onClick={() => {
+                deleteExpense(group._id);
+              }}
+            ></i>
               </div>
-            );
-          })}
-        </div>
+              <Divider />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import { Button, message, Table } from "antd";
-import ExpensesForm from "./ExpensesForm";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { SetLoader } from "../../redux/loadersSlice";
-import { GetGroups } from "../../apicalls/products";
-import { useEffect } from "react";
-import moment from "moment";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { GetExpense } from "../../apicalls/expense";
-import { DeleteExpense } from "../../apicalls/expense";
+import { Button, message, Table } from "antd";
+import moment from "moment";
+
+import { SetLoader } from "../../redux/loadersSlice";
+import ExpensesForm from "./ExpensesForm";
+import { GetExpense, DeleteExpense } from "../../apicalls/expense";
+
 const Expense = () => {
   const { id } = useParams();
-  const { user } = useSelector((state) => state.users);
   const [expenses, setExpenses] = React.useState(null);
   const [selectedExpense, setSelectedExpense] = React.useState(null);
   const [showExpenseForm, setshowExpenseForm] = React.useState(false);
@@ -22,10 +19,9 @@ const Expense = () => {
     try {
       dispatch(SetLoader(true));
       const response = await GetExpense({
-        groupId:id,
-        type:"expense"
+        groupId: id,
+        type: "expense",
       });
-      console.log(response.data);
       if (response.success) {
         dispatch(SetLoader(false));
         setExpenses(response.data);
@@ -35,11 +31,13 @@ const Expense = () => {
       message.error(error.message);
     }
   };
+
   const deleteExpense = async (id) => {
     try {
       dispatch(SetLoader(true));
       const response = await DeleteExpense(id);
       dispatch(SetLoader(false));
+
       if (response.success) {
         message.success(response.message);
         getData();
@@ -56,30 +54,26 @@ const Expense = () => {
     {
       title: "Description",
       dataIndex: "description",
-      className:"max-sm:hidden",
     },
     {
       title: "Amount",
       dataIndex: "amount",
-      className:"max-sm:hidden",
     },
     {
       title: "Who Paid",
       dataIndex: "payer",
-      className:"max-sm:hidden",
+      // className:"flex items-center bg-gray-100 p-2 rounded-lg shadow-sm",
+      className:"text-lg font-medium text-gray-800 mr-2"
     },
     {
       title: "Date",
       dataIndex: "date",
-      render: (text, record) =>
-        moment(record.date).format("DD-MM-YYYY"),
-      // moment(record.createdAt).format("DD-MM-YYYY hh:mm A"),
-      className:"max-sm:hidden"
+      render: (record) => moment(record.date).format("DD-MM-YYYY"),
     },
     {
       title: "Action",
       dataIndex: "action",
-      render: (text, record) => {
+      render: (text,record) => {
         return (
           <div className="flex gap-5 items-center">
             <i
@@ -100,24 +94,24 @@ const Expense = () => {
       },
     },
     {
-      title: "To Whom",
-      // dataIndex: "payees",
-      render: (text, record) => {
-        return (
-          <div className="flex gap-5 items-center">
-            {/* {console.log(record.identifier)} */}
-            {/* {console.log(record)} */}
-            {/* {text} */}
-            {/* {console.log(text)} */}
-            {
-              record.payees?.map((payee)=>{
-                console.log(payee.identifier)
-                return <p>{payee.identifier} {payee.amount}</p>
-              })
-            }
-          </div>
-        );
-      },
+      title: "For Whom",
+render: (text, record) => {
+  return (
+    <div className="flex flex-wrap gap-4 items-center">
+      {record.payees?.map((payee) => (
+        <div key={payee.identifier} className="flex items-center bg-gray-100 p-2 rounded-lg shadow-sm">
+          <p className="text-lg font-medium text-gray-800 mr-2">
+            {payee.identifier}
+          </p>
+          <p className="text-sm text-gray-600">
+            {payee.amount.toFixed(2)} {/* Ensure amount is displayed with two decimal places */}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+},
+
     },
   ];
 
@@ -138,10 +132,14 @@ const Expense = () => {
           Add Expense
         </Button>
       </div>
-      <Table columns={columns} dataSource={expenses} scroll={{ x: 'max-content' }}></Table>
+      <Table
+        columns={columns}
+        dataSource={expenses}
+        scroll={{ x: "max-content" }}
+      ></Table>
       {showExpenseForm && (
         <ExpensesForm
-        showExpenseForm={showExpenseForm}
+          showExpenseForm={showExpenseForm}
           setshowExpenseForm={setshowExpenseForm}
           selectedExpense={selectedExpense}
           getData={getData}

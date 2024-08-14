@@ -15,6 +15,7 @@ require('dotenv').config();
 const dbconfig = require('./config/dbConfig');
 const port = process.env.PORT || 5000;
 
+
 const usersRoute = require('./routes/usersRoutes');
 const groupsRoute = require('./routes/groupsRoute');
 const expenseRoute = require('./routes/expenseRoute');
@@ -27,6 +28,16 @@ app.use('/api/settlement',settlementRoute);
 
 
 
+// deployment config
+const path = require("path");
+__dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
 
 app.listen(port,()=>console.log(`Node/express JS Server started on port ${port}`));

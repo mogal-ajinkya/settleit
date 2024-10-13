@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# SplitIt - Expense Sharing Made Easy
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SplitIt is a MERN stack application designed to simplify expense sharing among groups of friends during trips or shared activities. Instead of each person logging their own expenses, one person can manage all transactions and easily calculate how to minimize cash flow among the group.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Single-point Entry**: One person can create a sheet, add group members, and log all transactions.
+- **Expense Sharing**: Automatically calculates the minimum cash flow required to settle all debts.
+- **Group Management**: Create and manage multiple groups for different trips or activities.
+- **Shareable Sheets**: Easy sharing of expense sheets with all group members.
+- **Final Settlement**: Provides a clear summary of who owes what to whom.
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **MongoDB**: Database
+- **Express.js**: Backend framework
+- **React**: Frontend library
+- **Node.js**: Runtime environment
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/splitit.git
+   cd splitit
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies for backend and frontend
+   ```
+   cd backend
+   npm install
+   cd ../frontend
+   npm install
+   ```
 
-### `npm run build`
+3. Set up environment variables
+   Create a `.env` file in the backend directory and add:
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   PORT=5000
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Start the backend server
+   ```
+   cd backend
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. Start the frontend application
+   ```
+   cd frontend
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The application should now be running on `http://localhost:3000`
 
-### `npm run eject`
+## Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Create an account or log in
+2. Create a new group and add members
+3. Start adding expenses, specifying who paid and for whom
+4. View the calculated minimum cash flow to settle all debts
+5. Share the expense sheet with your group
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Contributing
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## License
 
-## Learn More
+This project is licensed under the MIT License.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Contact
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you have any questions, feel free to reach out to [Your Name] at [your.email@example.com].

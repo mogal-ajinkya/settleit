@@ -4,11 +4,11 @@ SplitIt is a MERN stack application designed to simplify expense sharing among g
 
 ## How it works 
    - **Following diagram shows input debts to be settled**:
-   - 
+     
    ![image](https://github.com/user-attachments/assets/e894410d-0255-42ad-9efe-eccd9fb3548b)
 
    - **Above debts can be settled in following optimized way**:
-   - 
+     
    ![image](https://github.com/user-attachments/assets/301328f9-124c-41bf-b71d-82467823fa0d)
 
    - **Algorithm** : The idea is to use Greedy algorithm where at every step, settle all amounts of one person and recur for remaining n-1 persons.

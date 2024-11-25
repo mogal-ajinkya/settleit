@@ -1,4 +1,4 @@
-# SettleIt - Expense Sharing Made Easy
+# SettleIt - Expense Settling Made Easy
 
 SettleIt is a MERN stack application designed to simplify expense sharing among groups of friends during trips or shared activities. Instead of each person logging their own expenses, one person can manage all transactions and easily calculate how to minimize cash flow among the group.
 
@@ -84,5 +84,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Demo
 
-[settle.com](https://splitit-sife.onrender.com/)
+[settleit.com](https://splitit-sife.onrender.com/)
 

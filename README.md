@@ -1,6 +1,6 @@
-# SplitIt - Expense Sharing Made Easy
+# SettleIt - Expense Sharing Made Easy
 
-SplitIt is a MERN stack application designed to simplify expense sharing among groups of friends during trips or shared activities. Instead of each person logging their own expenses, one person can manage all transactions and easily calculate how to minimize cash flow among the group.
+SettleIt is a MERN stack application designed to simplify expense sharing among groups of friends during trips or shared activities. Instead of each person logging their own expenses, one person can manage all transactions and easily calculate how to minimize cash flow among the group.
 
 ## How it works 
    - **Following diagram shows input debts to be settled**:
@@ -37,8 +37,8 @@ SplitIt is a MERN stack application designed to simplify expense sharing among g
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/splitit.git
-   cd splitit
+   git clone https://github.com/yourusername/settle.git
+   cd settleit
    ```
 
 2. Install dependencies for backend and frontend
@@ -84,5 +84,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Demo
 
-[splitit.com](https://splitit-sife.onrender.com/)
+[settle.com](https://settleit-sife.onrender.com/)
 

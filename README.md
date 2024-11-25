@@ -84,5 +84,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Demo
 
-[settle.com](https://settleit-sife.onrender.com/)
+[settle.com](https://splitit-sife.onrender.com/)
 

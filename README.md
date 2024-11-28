@@ -37,7 +37,7 @@ SettleIt is a MERN stack application designed to simplify expense sharing among 
 
 1. Clone the repository
    ```
-   git clone https://github.com/yourusername/settle.git
+   git clone https://github.com/mogal-ajinkya/settleit.git
    cd settleit
    ```
 
